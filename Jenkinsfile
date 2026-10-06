@@ -1,4 +1,29 @@
-pythonipeline {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+pipeline {
     agent any
 
     stages {
@@ -28,35 +53,6 @@ pythonipeline {
         }
     }
 }
-premchand@DESKTOP-KLICCCQ:~/devops-demo$
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
