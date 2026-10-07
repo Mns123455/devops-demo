@@ -1,29 +1,45 @@
-
 pipeline {
     agent any
 
     stages {
-        stage('Build Docker Image') {
+
+        stage('Checkout') {
             steps {
-                sh 'docker build -t my-python-app .'
+                git(
+                    branch: 'main',
+                    credentialsId: 'github-token',
+                    url: 'https://github.com/Mns123455/devops-demo.git'
+                )
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t devops-demo .'
             }
         }
 
         stage('Stop Old Container') {
             steps {
-                sh 'docker stop my-python-container || true'
+                sh 'docker stop devops-demo-container || true'
             }
         }
 
         stage('Remove Old Container') {
             steps {
-                sh 'docker rm my-python-container || true'
+                sh 'docker rm devops-demo-container || true'
             }
         }
 
-        stage('Run New Container') {
+        stage('Deploy') {
             steps {
-                sh 'docker run -d -p 5000:5000 --name my-python-container my-python-app'
+                sh 'docker run -d -p 5000:5000 --name devops-demo-container devops-demo'
+            }
+        }
+
+        stage('Logs') {
+            steps {
+                sh 'docker logs --tail 50 devops-demo-container'
             }
         }
     }
